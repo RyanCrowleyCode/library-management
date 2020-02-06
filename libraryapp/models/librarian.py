@@ -30,4 +30,4 @@ class Librarian(models.Model):
     # object will be saved.
     @receiver(post_save, sender=User)
     def save_librarian(sender, instance, **kwargs):
-        instance.librian.save()
+        instance.librarian.save()
