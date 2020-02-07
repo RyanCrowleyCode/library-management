@@ -5,32 +5,33 @@ from ..connection import Connection
 
 
 def list_libraries(request):
-    with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor()
+    if request.method == 'GET':
+        with sqlite3.connect(Connection.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            db_cursor = conn.cursor()
 
-        db_cursor.execute("""
-        select
-            l.id,
-            l.title,
-            l.address
-        from libraryapp_library l
-        """)
+            db_cursor.execute("""
+            select
+                l.id,
+                l.title,
+                l.address
+            from libraryapp_library l
+            """)
 
-        all_libraries = []
-        dataset = db_cursor.fetchall()
+            all_libraries = []
+            dataset = db_cursor.fetchall()
 
-        for row in dataset:
-            library = Library()
-            library.id = row['id']
-            library.title = row['title']
-            library.address = row['address']
+            for row in dataset:
+                library = Library()
+                library.id = row['id']
+                library.title = row['title']
+                library.address = row['address']
 
-            all_libraries.append(library)
+                all_libraries.append(library)
 
-    template = 'libraries/list.html'
-    context = {
-        'all_libraries': all_libraries
-    }
+        template = 'libraries/list.html'
+        context = {
+            'all_libraries': all_libraries
+        }
 
-    return render(request, template, context)
+        return render(request, template, context)

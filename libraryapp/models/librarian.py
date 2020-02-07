@@ -7,6 +7,9 @@ from .library import Library
 
 class Librarian(models.Model):
 
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.ForeignKey(
         Library, related_name="librarians",
