@@ -1,1 +1,3 @@
 libraryenv/
+*.pyc
+__pycache__/
