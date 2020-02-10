@@ -2,8 +2,10 @@ import sqlite3
 from django.shortcuts import render
 from libraryapp.models import Librarian
 from ..connection import Connection
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def list_librarians(request):
     if request.method == 'GET':
         with sqlite3.connect(Connection.db_path) as conn:
@@ -15,11 +17,10 @@ def list_librarians(request):
                 l.id,
                 l.location_id,
                 l.user_id,
-                u.first_name,
-                u.last_name,
-                u.email
+                l.first_name,
+                l.last_name,
+                l.email
             from libraryapp_librarian l
-            join auth_user u on l.user_id = u.id
             ''')
 
             all_librarians = []
