@@ -2,12 +2,15 @@ import sqlite3
 from django.shortcuts import render
 from libraryapp.models import Book
 from ..connection import Connection
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def book_list(request):
     if request.method == 'GET':
         # opens, and then closes connection, because we use 'with'
         with sqlite3.connect(Connection.db_path) as conn:
-            # make a row factory
+            # make a row factory. sqlite3.Row bascially puts keys on our tuples
             conn.row_factory = sqlite3.Row
             # create a cursor object
             db_cursor = conn.cursor()
@@ -42,7 +45,11 @@ def book_list(request):
 
                 all_books.append(book)
 
+        # variable name template assigned to the path to our HTML template
+        # that will be used for this view
         template = 'books/list.html'
+
+        # dictionary of values passing into the template
         context = {
             'all_books': all_books
         }

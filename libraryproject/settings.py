@@ -119,3 +119,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Where to go when the user authenticates
+# When a user logs in, they will be redirected to the books view
+LOGIN_REDIRECT_URL = '/books'
