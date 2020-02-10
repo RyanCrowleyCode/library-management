@@ -1,5 +1,5 @@
 import sqlite3
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from libraryapp.models import Book
 from libraryapp.models import Library
@@ -12,7 +12,7 @@ def get_libraries():
         conn.row_factory = model_factory(Library)
         db_cursor = conn.cursor()
 
-        db_cursor.execut("""
+        db_cursor.execute("""
         select
             l.id,
             l.title,
