@@ -11,5 +11,10 @@
 
     <div>Published in {{ book.year_published }}</div>
     <div>ISBN: {{ book.ISBN_number }}</div>
+    <form action="{% url 'libraryapp:book' book.id %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="actual_method" value="DELETE">
+      <button onclick="return confirm('Are you sure you want to delete this?')">Delete</button>
+  </form>
   </body>
 </html>
